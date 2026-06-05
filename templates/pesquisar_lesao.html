@@ -1,0 +1,1938 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}
+
+Pesquisar Lesão com IA
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<style>
+
+
+
+/* ==========================================
+
+   BANNER HERO (MESH GRADIENT)
+
+   ========================================== */
+
+.hero-search {
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #090e1a 0%,
+
+            #11192e 50%,
+
+            #1d113c 100%
+
+        )
+
+        !important;
+
+
+
+    border:
+
+        1px solid
+
+        rgba(255, 255, 255, 0.06)
+
+        !important;
+
+
+
+    border-radius:
+
+        28px;
+
+
+
+    padding:
+
+        50px;
+
+
+
+    margin-bottom:
+
+        35px;
+
+
+
+    box-shadow:
+
+        0 15px 35px
+
+        rgba(0, 0, 0, 0.25);
+
+
+
+    position:
+
+        relative;
+
+
+
+    overflow:
+
+        hidden;
+
+}
+
+
+
+.hero-search h1 {
+
+    font-size:
+
+        2.8rem;
+
+
+
+    font-weight:
+
+        800;
+
+
+
+    color:
+
+        #ffffff
+
+        !important;
+
+
+
+    text-shadow:
+
+        0 4px 15px
+
+        rgba(0, 0, 0, 0.35);
+
+}
+
+
+
+/* ==========================================
+
+   FORMULÁRIO DE BUSCA MODERNIZADO
+
+   ========================================== */
+
+.modern-search-box {
+
+    background:
+
+        rgba(255, 255, 255, 0.02)
+
+        !important;
+
+
+
+    border:
+
+        1px solid
+
+        var(--border)
+
+        !important;
+
+
+
+    color:
+
+        var(--text)
+
+        !important;
+
+
+
+    border-radius:
+
+        18px
+
+        !important;
+
+
+
+    padding:
+
+        16px 24px
+
+        !important;
+
+
+
+    font-size:
+
+        1.1rem
+
+        !important;
+
+
+
+    transition:
+
+        all 0.28s
+
+        ease;
+
+}
+
+
+
+[data-theme="light"] .modern-search-box {
+
+    background:
+
+        #ffffff
+
+        !important;
+
+}
+
+
+
+.modern-search-box:focus {
+
+    border-color:
+
+        #00f0ff
+
+        !important;
+
+
+
+    box-shadow:
+
+        0 0 15px
+
+        rgba(0, 240, 255, 0.25)
+
+        !important;
+
+}
+
+
+
+.search-ai-btn {
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #ff6b00,
+
+            #ff3d00
+
+        )
+
+        !important;
+
+
+
+    border:
+
+        none
+
+        !important;
+
+
+
+    color:
+
+        #ffffff
+
+        !important;
+
+
+
+    border-radius:
+
+        18px
+
+        !important;
+
+
+
+    padding:
+
+        16px 30px
+
+        !important;
+
+
+
+    font-weight:
+
+        700
+
+        !important;
+
+
+
+    font-size:
+
+        1.05rem
+
+        !important;
+
+
+
+    transition:
+
+        all 0.25s
+
+        ease;
+
+}
+
+
+
+.search-ai-btn:hover {
+
+    transform:
+
+        translateY(-2px);
+
+
+
+    box-shadow:
+
+        0 8px 25px
+
+        rgba(255, 107, 0, 0.35)
+
+        !important;
+
+}
+
+
+
+/* ==========================================
+
+   CARDS DE INDICADORES (KPIs)
+
+   ========================================== */
+
+.kpi-card-ai {
+
+    background:
+
+        var(--card)
+
+        !important;
+
+
+
+    border:
+
+        1px solid
+
+        var(--border)
+
+        !important;
+
+
+
+    border-radius:
+
+        24px;
+
+
+
+    padding:
+
+        24px;
+
+
+
+    backdrop-filter:
+
+        blur(14px);
+
+
+
+    transition:
+
+        all 0.3s
+
+        ease;
+
+}
+
+
+
+.kpi-card-ai:hover {
+
+    transform:
+
+        translateY(-6px);
+
+
+
+    border-color:
+
+        rgba(0, 240, 255, 0.25)
+
+        !important;
+
+
+
+    box-shadow:
+
+        0 12px 30px
+
+        rgba(0, 240, 255, 0.08)
+
+        !important;
+
+}
+
+
+
+.kpi-title-ai {
+
+    font-size:
+
+        0.85rem;
+
+
+
+    font-weight:
+
+        700;
+
+
+
+    text-transform:
+
+        uppercase;
+
+
+
+    letter-spacing:
+
+        0.05em;
+
+
+
+    color:
+
+        var(--secondary);
+
+
+
+    margin-bottom:
+
+        10px;
+
+}
+
+
+
+.kpi-value-ai {
+
+    font-family:
+
+        'JetBrains Mono',
+
+        monospace;
+
+
+
+    font-weight:
+
+        800;
+
+
+
+    font-size:
+
+        2.2rem;
+
+
+
+    color:
+
+        var(--text);
+
+}
+
+
+
+/* ==========================================
+
+   AI PREDICTOR CARDS
+
+   ========================================== */
+
+.panel-ai {
+
+    background:
+
+        var(--card)
+
+        !important;
+
+
+
+    border:
+
+        1px solid
+
+        var(--border)
+
+        !important;
+
+
+
+    border-radius:
+
+        28px
+
+        !important;
+
+
+
+    backdrop-filter:
+
+        blur(16px);
+
+
+
+    box-shadow:
+
+        0 10px 30px
+
+        rgba(0, 0, 0, 0.05);
+
+}
+
+
+
+.ai-header-pill {
+
+    background:
+
+        rgba(0, 240, 255, 0.08)
+
+        !important;
+
+
+
+    color:
+
+        #00d4ff
+
+        !important;
+
+
+
+    border:
+
+        1px solid
+
+        rgba(0, 240, 255, 0.18);
+
+
+
+    font-weight:
+
+        700;
+
+
+
+    font-size:
+
+        0.8rem;
+
+}
+
+
+
+.protocol-pill {
+
+    background:
+
+        rgba(255, 255, 255, 0.03);
+
+
+
+    border:
+
+        1px solid
+
+        var(--border);
+
+
+
+    border-radius:
+
+        14px;
+
+
+
+    padding:
+
+        14px 18px;
+
+
+
+    margin-bottom:
+
+        12px;
+
+
+
+    transition:
+
+        all 0.2s
+
+        ease;
+
+}
+
+
+
+.protocol-pill:hover {
+
+    background:
+
+        rgba(255, 255, 255, 0.05);
+
+
+
+    transform:
+
+        translateX(5px);
+
+}
+
+
+
+/* ==========================================
+
+   TABELAS PREMIUM
+
+   ========================================== */
+
+.table-premium {
+
+    border-collapse:
+
+        separate;
+
+
+
+    border-spacing:
+
+        0 8px;
+
+}
+
+
+
+.table-premium tr {
+
+    background:
+
+        rgba(255, 255, 255, 0.01);
+
+
+
+    transition:
+
+        all 0.2s
+
+        ease;
+
+}
+
+
+
+.table-premium tr:hover {
+
+    background:
+
+        rgba(255, 255, 255, 0.03);
+
+}
+
+
+
+.table-premium td, 
+
+.table-premium th {
+
+    padding:
+
+        16px 20px
+
+        !important;
+
+
+
+    border:
+
+        none
+
+        !important;
+
+}
+
+
+
+.table-premium th {
+
+    font-weight:
+
+        700;
+
+
+
+    text-transform:
+
+        uppercase;
+
+
+
+    font-size:
+
+        0.75rem;
+
+
+
+    letter-spacing:
+
+        0.05em;
+
+
+
+    color:
+
+        var(--secondary);
+
+}
+
+
+
+.table-premium td:first-child {
+
+    border-top-left-radius:
+
+        16px;
+
+
+
+    border-bottom-left-radius:
+
+        16px;
+
+}
+
+
+
+.table-premium td:last-child {
+
+    border-top-right-radius:
+
+        16px;
+
+
+
+    border-bottom-right-radius:
+
+        16px;
+
+}
+
+
+
+</style>
+
+
+
+<!-- HERO E BUSCA -->
+
+<div class="hero-search">
+
+
+
+    <div class="row align-items-center">
+
+
+
+        <div class="col-lg-8">
+
+
+
+            <span
+
+                class="
+
+                badge
+
+                ai-header-pill
+
+                px-3
+
+                py-2
+
+                mb-3
+
+                "
+
+            >
+
+                ⚡ NBA Injury Brain AI v3.0
+
+            </span>
+
+
+
+            <h1 class="mb-3">
+
+                Predição e Busca de Lesões
+
+            </h1>
+
+
+
+            <p
+
+                class="
+
+                text-light
+
+                opacity-75
+
+                fs-5
+
+                mb-4
+
+                "
+
+            >
+
+                Analise históricos de lesões da NBA usando raciocínio
+
+                baseado em casos (CBR) e algoritmos preditivos de ML.
+
+            </p>
+
+
+
+        </div>
+
+
+
+        <div class="col-lg-4 text-end d-none d-lg-block">
+
+
+
+            <div
+
+                style="
+
+                font-size:
+
+                6.5rem;
+
+                opacity:
+
+                0.85;
+
+                filter:
+
+                drop-shadow(0 0 15px rgba(255, 107, 0, 0.2));
+
+                "
+
+            >
+
+                🔎
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <!-- CAIXA DE BUSCA -->
+
+    <form
+
+        method="GET"
+
+        action="/pesquisar-lesao"
+
+        class="mt-2"
+
+    >
+
+
+
+        <div class="input-group">
+
+
+
+            <input
+
+                type="text"
+
+                name="lesao"
+
+                class="
+
+                form-control
+
+                modern-search-box
+
+                "
+
+                placeholder="Ex: entorse de tornozelo, menisco, posterior da coxa, ligamento..."
+
+                value="{{ termo }}"
+
+                required
+
+            >
+
+
+
+            <button
+
+                type="submit"
+
+                class="
+
+                btn
+
+                search-ai-btn
+
+                px-4
+
+                "
+
+            >
+
+                🧬 Analisar com IA
+
+            </button>
+
+
+
+        </div>
+
+
+
+    </form>
+
+
+
+</div>
+
+
+
+<!-- RESULTADOS DA ANÁLISE -->
+
+{% if termo %}
+
+
+
+    {% if estatisticas %}
+
+
+
+        <!-- KPIs DA LESÃO -->
+
+        <div class="row g-4 mb-5">
+
+
+
+            <!-- TOTAL CASOS -->
+
+            <div class="col-md-3">
+
+
+
+                <div class="kpi-card-ai">
+
+
+
+                    <div class="kpi-title-ai">
+
+                        Casos Analisados
+
+                    </div>
+
+
+
+                    <div class="kpi-value-ai">
+
+                        {{ estatisticas.casos }}
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- MÉDIA DIAS -->
+
+            <div class="col-md-3">
+
+
+
+                <div class="kpi-card-ai">
+
+
+
+                    <div class="kpi-title-ai">
+
+                        Média de Dias Fora
+
+                    </div>
+
+
+
+                    <div class="kpi-value-ai">
+
+                        {{ estatisticas.media_retorno }} <span class="fs-6 fw-normal text-muted">dias</span>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- MÉDIA JOGOS -->
+
+            <div class="col-md-3">
+
+
+
+                <div class="kpi-card-ai">
+
+
+
+                    <div class="kpi-title-ai">
+
+                        Média Jogos Perdidos
+
+                    </div>
+
+
+
+                    <div class="kpi-value-ai">
+
+                        {{ estatisticas.media_jogos }} <span class="fs-6 fw-normal text-muted">jogos</span>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- TAXA RECORRÊNCIA -->
+
+            <div class="col-md-3">
+
+
+
+                <div class="kpi-card-ai">
+
+
+
+                    <div class="kpi-title-ai">
+
+                        Taxa de Recorrência
+
+                    </div>
+
+
+
+                    <div class="kpi-value-ai" style="color: #ff9f0a;">
+
+                        {{ estatisticas.recorrencia }}%
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <!-- GRADE PRINCIPAL -->
+
+        <div class="row g-4 mb-5">
+
+
+
+            <!-- COLUNA ESQUERDA: PREDICÇÃO IA & CASOS SIMILARES -->
+
+            <div class="col-lg-8">
+
+
+
+                <!-- COMPARAÇÃO DE PREDIÇÃO IA -->
+
+                <div class="panel-ai p-4 mb-4">
+
+
+
+                    <h4 class="fw-bold mb-4 d-flex align-items-center">
+
+                        🧠 Estimativas de Recuperação Clínicas (IA)
+
+                    </h4>
+
+
+
+                    <div class="row g-4 text-center">
+
+
+
+                        <!-- CBR CARD -->
+
+                        <div class="col-md-6">
+
+
+
+                            <div
+
+                                class="p-4 rounded-4"
+
+                                style="
+
+                                background:
+
+                                rgba(255, 107, 0, 0.04);
+
+                                border:
+
+                                1px solid
+
+                                rgba(255, 107, 0, 0.15);
+
+                                "
+
+                            >
+
+
+
+                                <span
+
+                                    class="
+
+                                    badge
+
+                                    rounded-pill
+
+                                    px-3
+
+                                    py-2
+
+                                    mb-2
+
+                                    "
+
+                                    style="
+
+                                    background:
+
+                                    rgba(255, 107, 0, 0.12);
+
+                                    color:
+
+                                    #ff8f3d;
+
+                                    "
+
+                                >
+
+                                    🤖 Raciocínio Baseado em Casos (CBR)
+
+                                </span>
+
+
+
+                                <h2
+
+                                    class="display-5 fw-bold mt-2"
+
+                                    style="color: #ff6b00; font-family: 'JetBrains Mono', monospace;"
+
+                                >
+
+                                    {% if cbr_resultado and cbr_resultado.dias_estimados %}
+
+                                        {{ cbr_resultado.dias_estimados }} <span class="fs-5 fw-normal text-muted">dias</span>
+
+                                    {% else %}
+
+                                        --
+
+                                    {% endif %}
+
+                                </h2>
+
+
+
+                                <p class="text-secondary small mt-2 mb-0">
+
+                                    Cálculo por similaridade adaptativa de registros reais.
+
+                                </p>
+
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                        <!-- ML CARD -->
+
+                        <div class="col-md-6">
+
+
+
+                            <div
+
+                                class="p-4 rounded-4"
+
+                                style="
+
+                                background:
+
+                                rgba(0, 240, 255, 0.04);
+
+                                border:
+
+                                1px solid
+
+                                rgba(0, 240, 255, 0.15);
+
+                                "
+
+                            >
+
+
+
+                                <span
+
+                                    class="
+
+                                    badge
+
+                                    rounded-pill
+
+                                    px-3
+
+                                    py-2
+
+                                    mb-2
+
+                                    "
+
+                                    style="
+
+                                    background:
+
+                                    rgba(0, 240, 255, 0.12);
+
+                                    color:
+
+                                    #3df0ff;
+
+                                    "
+
+                                >
+
+                                    💻 Machine Learning (Random Forest)
+
+                                </span>
+
+
+
+                                <h2
+
+                                    class="display-5 fw-bold mt-2"
+
+                                    style="color: #00f0ff; font-family: 'JetBrains Mono', monospace;"
+
+                                >
+
+                                    {% if ml_previsao %}
+
+                                        {{ ml_previsao }} <span class="fs-5 fw-normal text-muted">dias</span>
+
+                                    {% else %}
+
+                                        --
+
+                                    {% endif %}
+
+                                </h2>
+
+
+
+                                <p class="text-secondary small mt-2 mb-0">
+
+                                    Predição baseada em biométrica regressiva v3.
+
+                                </p>
+
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+                <!-- TABELA CASOS SIMILARES -->
+
+                <div class="panel-ai p-4">
+
+
+
+                    <h4 class="fw-bold mb-4">
+
+                        📋 Casos Históricos Reais Encontrados (CBR)
+
+                    </h4>
+
+
+
+                    <div class="table-responsive">
+
+
+
+                        <table class="table table-premium align-middle mb-0">
+
+
+
+                            <thead>
+
+
+
+                                <tr>
+
+                                    <th>Jogador</th>
+
+                                    <th>Time</th>
+
+                                    <th>Idade</th>
+
+                                    <th>Lesão Histórica</th>
+
+                                    <th class="text-center">Jogos Perdidos</th>
+
+                                    <th class="text-center">Retorno Real</th>
+
+                                </tr>
+
+
+
+                            </thead>
+
+
+
+                            <tbody>
+
+
+
+                                {% for caso in casos_similares %}
+
+
+
+                                <tr>
+
+
+
+                                    <td class="fw-bold">
+
+                                        {{ caso.jogador }}
+
+                                    </td>
+
+
+
+                                    <td class="text-secondary">
+
+                                        {{ caso.time|default('N/A') }}
+
+                                    </td>
+
+
+
+                                    <td class="fw-medium text-secondary">
+
+                                        {{ caso.idade|default('-') }} anos
+
+                                    </td>
+
+
+
+                                    <td>
+
+                                        <span
+
+                                            class="
+
+                                            badge
+
+                                            bg-dark
+
+                                            text-white
+
+                                            border
+
+                                            border-secondary
+
+                                            "
+
+                                            style="
+
+                                            font-size:
+
+                                            0.8rem;
+
+                                            "
+
+                                        >
+
+                                            {{ caso.tipo_lesao }}
+
+                                        </span>
+
+                                    </td>
+
+
+
+                                    <td class="text-center fw-bold text-warning">
+
+                                        {{ caso.jogos_lesionado|default(0) }}
+
+                                    </td>
+
+
+
+                                    <td class="text-center fw-bold" style="color: #00e676;">
+
+                                        {{ caso.dias_retorno_real|default(0) }} dias
+
+                                    </td>
+
+
+
+                                </tr>
+
+
+
+                                {% endfor %}
+
+
+
+                            </tbody>
+
+
+
+                        </table>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- COLUNA DIREITA: PROTOCOLOS & TRADUÇÃO -->
+
+            <div class="col-lg-4">
+
+
+
+                <!-- CARD DE TRADUÇÃO -->
+
+                <div class="panel-ai p-4 mb-4">
+
+
+
+                    <h5 class="fw-bold mb-3">
+
+                        🏷️ Mapeamento Médico
+
+                    </h5>
+
+
+
+                    <div class="mb-3">
+
+
+
+                        <span class="detail-label text-muted small d-block">
+
+                            Termo Pesquisado
+
+                        </span>
+
+
+
+                        <span class="fs-5 fw-bold text-capitalize">
+
+                            {{ termo }}
+
+                        </span>
+
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+
+                        <span class="detail-label text-muted small d-block">
+
+                            Tradução NBA Database
+
+                        </span>
+
+
+
+                        <span class="fs-5 fw-bold" style="color: #ff6b00;">
+
+                            {{ termo_busca }}
+
+                        </span>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+                <!-- CARD DE TRATAMENTO -->
+
+                <div class="panel-ai p-4">
+
+
+
+                    <h5 class="fw-bold mb-4">
+
+                        🏥 Protocolo Clínico Padrão
+
+                    </h5>
+
+
+
+                    {% if tratamento %}
+
+
+
+                        {% for item in tratamento %}
+
+
+
+                        <div class="protocol-pill">
+
+
+
+                            <div class="d-flex align-items-center gap-2">
+
+
+
+                                <span style="font-size: 1.1rem;">⚕️</span>
+
+
+
+                                <span class="fw-medium">
+
+                                    {{ item }}
+
+                                </span>
+
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                        {% endfor %}
+
+
+
+                    {% else %}
+
+
+
+                        <p class="text-secondary small mb-0">
+
+                            Nenhum tratamento padrão registrado no mapa para esta categoria. Consulte o médico do esporte encarregado.
+
+                        </p>
+
+
+
+                    {% endif %}
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    {% else %}
+
+
+
+        <!-- ZERO CASE BUCKET -->
+
+        <div class="panel-ai p-5 text-center my-5">
+
+
+
+            <div class="display-4 mb-3">⚠️</div>
+
+
+
+            <h4 class="fw-bold">Nenhum caso clínico encontrado</h4>
+
+
+
+            <p class="text-secondary max-width-600 mx-auto mt-2">
+
+                Não encontramos registros para o termo <strong>"{{ termo }}"</strong> (mapeado para <i>"{{ termo_busca }}"</i>) na base histórica de telemetria. 
+
+            </p>
+
+
+
+            <p class="text-secondary small">
+
+                Dica: Tente buscar por categorias mais gerais como <strong>tornozelo</strong>, <strong>joelho</strong>, <strong>menisco</strong>, <strong>ombro</strong>, <strong>aquiles</strong> ou <strong>ligamento</strong>.
+
+            </p>
+
+
+
+            <a
+
+                href="/pesquisar-lesao"
+
+                class="
+
+                btn
+
+                btn-outline-light
+
+                mt-4
+
+                px-4
+
+                "
+
+            >
+
+                🔄 Limpar Busca
+
+            </a>
+
+
+
+        </div>
+
+
+
+    {% endif %}
+
+
+
+{% else %}
+
+
+
+    <!-- SEÇÃO VAZIA (BOAS-VINDAS) -->
+
+    <div class="panel-ai p-5 text-center my-4">
+
+
+
+        <div class="display-4 mb-4">🧬</div>
+
+
+
+        <h4 class="fw-bold">
+
+            Sistema de Telemetria Clínica Inteligente
+
+        </h4>
+
+
+
+        <p
+
+            class="
+
+            text-secondary
+
+            mx-auto
+
+            my-3
+
+            "
+
+            style="
+
+            max-width:
+
+            650px;
+
+            "
+
+        >
+
+            Digite a lesão esportiva de interesse na caixa acima para acessar a estatística histórica de recuperação da NBA. Nosso modelo irá cruzar dados reais de casos similares (CBR) e inferências de Machine Learning (ML) para estimar o período recomendado de reabilitação.
+
+        </p>
+
+
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+
+
+
+            <a
+
+                href="/pesquisar-lesao?lesao=tornozelo"
+
+                class="
+
+                btn
+
+                btn-sm
+
+                btn-outline-secondary
+
+                rounded-pill
+
+                px-3
+
+                "
+
+            >
+
+                Tornozelo
+
+            </a>
+
+
+
+            <a
+
+                href="/pesquisar-lesao?lesao=joelho"
+
+                class="
+
+                btn
+
+                btn-sm
+
+                btn-outline-secondary
+
+                rounded-pill
+
+                px-3
+
+                "
+
+            >
+
+                Joelho
+
+            </a>
+
+
+
+            <a
+
+                href="/pesquisar-lesao?lesao=menisco"
+
+                class="
+
+                btn
+
+                btn-sm
+
+                btn-outline-secondary
+
+                rounded-pill
+
+                px-3
+
+                "
+
+            >
+
+                Menisco
+
+            </a>
+
+
+
+            <a
+
+                href="/pesquisar-lesao?lesao=posterior+da+coxa"
+
+                class="
+
+                btn
+
+                btn-sm
+
+                btn-outline-secondary
+
+                rounded-pill
+
+                px-3
+
+                "
+
+            >
+
+                Coxa
+
+            </a>
+
+
+
+            <a
+
+                href="/pesquisar-lesao?lesao=aquiles"
+
+                class="
+
+                btn
+
+                btn-sm
+
+                btn-outline-secondary
+
+                rounded-pill
+
+                px-3
+
+                "
+
+            >
+
+                Aquiles
+
+            </a>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+{% endif %}
+
+
+
+{% endblock %}
+

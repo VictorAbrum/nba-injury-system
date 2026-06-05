@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ nome }}
+{% endblock %}
+
+{% block content %}
+
+<!-- HEADER TIME -->
+<div class="card p-5 shadow-lg mb-5 text-center">
+
+    <img
+        src="{{ logo }}"
+        width="140"
+        class="mx-auto mb-4"
+    >
+
+    <h1 class="display-4 fw-bold">
+        {{ nome }}
+    </h1>
+
+    <p class="text-secondary fs-5">
+        Perfil do time
+    </p>
+
+</div>
+
+<!-- KPIs -->
+<div class="row mb-5">
+
+    <div class="col-lg-4 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg text-center h-100">
+
+            <h5>
+                🏀 Jogadores
+            </h5>
+
+            <h1 class="display-5 mt-3">
+                {{ total_jogadores }}
+            </h1>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg text-center h-100">
+
+            <h5>
+                🏥 Total Lesões
+            </h5>
+
+            <h1 class="display-5 mt-3">
+                {{ total_lesoes }}
+            </h1>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg text-center h-100">
+
+            <h5>
+                🔴 Jogadores OUT
+            </h5>
+
+            <h1 class="display-5 mt-3">
+                {{ jogadores_out }}
+            </h1>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ELENCO -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>
+        🏀 Elenco
+    </h2>
+
+    <span class="badge bg-primary fs-6">
+        {{ total_jogadores }} jogadores
+    </span>
+
+</div>
+
+<div class="row">
+
+    {% for jogador in jogadores %}
+
+    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg text-center h-100">
+
+            <!-- FOTO -->
+            <img
+                src="{{ jogador.foto }}"
+                class="img-fluid rounded mx-auto mb-3"
+                style="
+                    max-height: 180px;
+                    object-fit: contain;
+                "
+            >
+
+            <!-- NOME -->
+            <h4 class="fw-bold">
+                {{ jogador.jogador }}
+            </h4>
+
+            <!-- TIME -->
+            <div class="mb-3">
+
+                <img
+                    src="{{ jogador.logo_time }}"
+                    width="45"
+                    class="mb-2"
+                >
+
+                <p class="text-secondary mb-0">
+                    {{ jogador.time }}
+                </p>
+
+            </div>
+
+            <!-- INFO -->
+            <div class="text-start mb-3">
+
+                <p class="mb-1">
+                    <strong>Idade:</strong>
+                    {{ jogador.idade }}
+                </p>
+
+                <p class="mb-1">
+                    <strong>Altura:</strong>
+                    {{ jogador.altura }} m
+                </p>
+
+                <p class="mb-0">
+                    <strong>Peso:</strong>
+                    {{ jogador.peso }} kg
+                </p>
+
+            </div>
+
+            <!-- BOTÃO -->
+            <a
+                href="/jogador/{{ jogador.jogador }}"
+                class="btn btn-primary w-100 mt-auto"
+            >
+                Ver Perfil
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

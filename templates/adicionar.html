@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}
+Adicionar Lesão
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">➕ Adicionar Lesão</h1>
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label>Jogador</label>
+        <input
+            type="text"
+            name="jogador"
+            class="form-control"
+            required
+        >
+    </div>
+
+    <div class="mb-3">
+        <label>Tipo da lesão</label>
+        <input
+            type="text"
+            name="tipo_lesao"
+            class="form-control"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label>Local da lesão</label>
+        <input
+            type="text"
+            name="local_lesao"
+            class="form-control"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label>Status</label>
+
+        <select
+            name="status"
+            class="form-control"
+        >
+            <option value="out">Out</option>
+            <option value="questionavel">Questionável</option>
+            <option value="ativo">Ativo</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Jogos lesionado</label>
+
+        <input
+            type="number"
+            name="jogos_lesionado"
+            class="form-control"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label>Data da lesão</label>
+
+        <input
+            type="date"
+            name="data_lesao"
+            class="form-control"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label>Retorno previsto</label>
+
+        <input
+            type="date"
+            name="retorno_previsto"
+            class="form-control"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label>Observações</label>
+
+        <textarea
+            name="observacoes"
+            class="form-control"
+        ></textarea>
+    </div>
+
+    <button class="btn btn-primary">
+        Salvar
+    </button>
+
+</form>
+
+{% endblock %}

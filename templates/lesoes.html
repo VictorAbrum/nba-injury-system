@@ -1,0 +1,1135 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}
+
+Lesões
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<style>
+
+/* ==========================================
+   BANNER HERO (PRESERVADO COM BANNER SEGURO DARK)
+   ========================================== */
+
+.hero-lesoes {
+
+    background:
+        linear-gradient(
+            135deg,
+            #090e1a 0%,
+            #15203c 50%,
+            #4c1d0f 100%
+        )
+        !important;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08)
+        !important;
+
+    border-radius:
+        28px;
+
+    padding:
+        50px;
+
+    margin-bottom:
+        30px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.2);
+
+    color:
+        #ffffff
+        !important;
+}
+
+.hero-lesoes h1 {
+
+    color:
+        #ffffff
+        !important;
+
+    text-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.3);
+}
+
+.hero-lesoes p {
+
+    color:
+        #f8fafc
+        !important;
+
+    opacity:
+        0.85;
+}
+
+/* ==========================================
+   CARDS DE FILTRO (MODERNOS & DILATADOS)
+   ========================================== */
+
+.filter-card {
+
+    background:
+        var(--card)
+        !important;
+
+    border:
+        1px solid
+        var(--border)
+        !important;
+
+    border-radius:
+        24px;
+
+    padding:
+        24px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.04);
+}
+
+.filter-title {
+
+    font-size:
+        0.85rem;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.05em;
+
+    color:
+        var(--secondary);
+
+    margin-bottom:
+        8px;
+}
+
+/* INPUTS MODERNOS */
+
+.modern-input {
+
+    background:
+        rgba(255, 255, 255, 0.02)
+        !important;
+
+    border:
+        1px solid
+        var(--border)
+        !important;
+
+    color:
+        var(--text)
+        !important;
+
+    border-radius:
+        14px
+        !important;
+
+    padding:
+        12px 16px
+        !important;
+
+    transition:
+        all 0.25s
+        ease;
+}
+
+[data-theme="light"] .modern-input {
+
+    background:
+        #ffffff
+        !important;
+}
+
+.modern-input:focus {
+
+    border-color:
+        #3b82f6
+        !important;
+
+    box-shadow:
+        0 0 10px
+        rgba(59, 130, 246, 0.2)
+        !important;
+}
+
+/* BOTÃO DE BUSCA */
+
+.search-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #b91c1c
+        )
+        !important;
+
+    border:
+        none
+        !important;
+
+    color:
+        #ffffff
+        !important;
+
+    border-radius:
+        14px
+        !important;
+
+    padding:
+        12px
+        !important;
+
+    font-weight:
+        700
+        !important;
+
+    transition:
+        all 0.2s
+        ease;
+}
+
+.search-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(239, 68, 68, 0.3)
+        !important;
+}
+
+/* ==========================================
+   CARDS DE LESÕES (GLASSMORPHISM DINÂMICO)
+   ========================================== */
+
+.injury-card {
+
+    background:
+        var(--card)
+        !important;
+
+    border:
+        1px solid
+        var(--border)
+        !important;
+
+    border-radius:
+        28px !important;
+
+    backdrop-filter:
+        blur(14px);
+
+    box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.06);
+
+    transition:
+        all .28s
+        ease
+        !important;
+}
+
+.injury-card:hover {
+
+    transform:
+        translateY(-8px)
+        scale(1.01);
+
+    border:
+        1px solid
+        rgba(239, 68, 68, .22)
+        !important;
+
+    box-shadow:
+        0 20px 45px
+        rgba(0, 0, 0, .25)
+        !important;
+}
+
+.injury-card:hover img {
+
+    transform:
+        scale(1.04);
+}
+
+.injury-card img {
+
+    transition:
+        .25s ease;
+}
+
+/* TEXTOS E ELEMENTOS DO CARD */
+
+.injury-card-title a {
+
+    color:
+        var(--text)
+        !important;
+
+    transition:
+        color 0.2s
+        ease;
+}
+
+.injury-card-title a:hover {
+
+    color:
+        #3b82f6
+        !important;
+}
+
+/* TIMBERWOLVES/PELICANS BADGES DYNAMIC COLOR */
+
+.team-badge {
+
+    background:
+        rgba(59, 130, 246, 0.12)
+        !important;
+
+    color:
+        #2563eb
+        !important;
+
+    border:
+        1px solid
+        rgba(59, 130, 246, 0.2);
+
+    font-weight:
+        600;
+}
+
+[data-theme="dark"] .team-badge {
+
+    background:
+        rgba(59, 130, 246, 0.18)
+        !important;
+
+    color:
+        #7db3ff
+        !important;
+}
+
+/* DETAIL LABELS & VALUES */
+
+.detail-label {
+
+    color:
+        var(--secondary)
+        !important;
+
+    font-size:
+        0.8rem;
+}
+
+.detail-value {
+
+    color:
+        var(--text)
+        !important;
+}
+
+/* BADGES & BOTÕES DO FOOTER */
+
+.badge {
+
+    letter-spacing:
+        .3px;
+}
+
+.btn {
+
+    transition:
+        .2s ease;
+}
+
+.btn:hover {
+
+    transform:
+        translateY(-2px);
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+   ========================================== */
+
+@media (
+    max-width: 992px
+) {
+
+    .hero-lesoes {
+
+        padding:
+        30px;
+    }
+
+    .hero-lesoes h1 {
+
+        font-size:
+        2.3rem;
+    }
+
+    .injury-card {
+
+        border-radius:
+        24px !important;
+    }
+}
+
+</style>
+
+
+<!-- HERO -->
+<div
+    class="
+    hero-lesoes
+    text-white
+    "
+>
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-8">
+
+            <span
+                class="
+                badge
+                rounded-pill
+                px-3
+                py-2
+                mb-3
+                "
+                style="
+                background:
+                rgba(
+                    239,
+                    68,
+                    68,
+                    .15
+                );
+                color:
+                #ff8d8d;
+                "
+            >
+
+                🏥 Sports Medicine
+
+            </span>
+
+            <h1
+                class="
+                display-4
+                fw-bold
+                mb-3
+                "
+            >
+
+                Injury Reports
+
+            </h1>
+
+            <p
+                class="
+                text-light
+                opacity-75
+                fs-5
+                mb-0
+                "
+            >
+
+                Monitoramento médico,
+                histórico e análise
+                avançada de lesões
+                dos atletas da NBA.
+
+            </p>
+
+        </div>
+
+        <div
+            class="
+            col-lg-4
+            text-end
+            "
+        >
+
+            <div
+                style="
+                font-size:
+                6rem;
+                opacity:
+                .85;
+                "
+            >
+
+                🏥
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FILTROS -->
+<div class="filter-card mb-5">
+
+    <form method="GET">
+
+        <div class="row g-3">
+
+            <!-- BUSCA -->
+            <div class="col-lg-4">
+
+                <div class="filter-title">
+
+                    Buscar
+
+                </div>
+
+                <input
+                    type="text"
+                    name="busca"
+                    class="
+                    form-control
+                    modern-input
+                    "
+                    placeholder="
+                    Jogador, Lesão, CID...
+                    "
+                    value="{{ busca }}"
+                >
+
+            </div>
+
+            <!-- TIME -->
+            <div class="col-lg-2">
+
+                <div class="filter-title">
+
+                    Time
+
+                </div>
+
+                <select
+                    name="time"
+                    class="
+                    form-select
+                    modern-input
+                    "
+                >
+
+                    <option value="">
+
+                        Todos
+
+                    </option>
+
+                    {% for t in times %}
+
+                    <option
+                        value="{{ t }}"
+                        {% if time == t %}
+                        selected
+                        {% endif %}
+                    >
+
+                        {{ t }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- STATUS -->
+            <div class="col-lg-2">
+
+                <div class="filter-title">
+
+                    Status
+
+                </div>
+
+                <select
+                    name="status"
+                    class="
+                    form-select
+                    modern-input
+                    "
+                >
+
+                    <option value="">
+
+                        Todos
+
+                    </option>
+
+                    <option
+                        value="out"
+                        {% if status == "out" %}
+                        selected
+                        {% endif %}
+                    >
+
+                        OUT
+
+                    </option>
+
+                    <option
+                        value="questionavel"
+                        {% if status == "questionavel" %}
+                        selected
+                        {% endif %}
+                    >
+
+                        Questionável
+
+                    </option>
+
+                    <option
+                        value="ativo"
+                        {% if status == "ativo" %}
+                        selected
+                        {% endif %}
+                    >
+
+                        Ativo
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- CIRURGIA -->
+            <div class="col-lg-2">
+
+                <div class="filter-title">
+
+                    Cirurgia
+
+                </div>
+
+                <select
+                    name="cirurgia"
+                    class="
+                    form-select
+                    modern-input
+                    "
+                >
+
+                    <option value="">
+                        Todos
+                    </option>
+
+                    <option
+                        value="sim"
+                        {% if cirurgia == "sim" %}
+                        selected
+                        {% endif %}
+                    >
+                        Sim
+                    </option>
+
+                    <option
+                        value="nao"
+                        {% if cirurgia == "nao" %}
+                        selected
+                        {% endif %}
+                    >
+                        Não
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- BOTÃO -->
+            <div class="col-lg-2 d-flex align-items-end">
+
+                <button
+                    class="
+                    btn
+                    w-100
+                    search-button
+                    "
+                >
+
+                    Filtrar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- CARDS -->
+<div class="row g-4">
+
+    {% for lesao in lesoes %}
+
+    {% set jogador = Jogador.query.filter_by(
+        jogador=lesao.jogador
+    ).first() %}
+
+    {% set observacoes = (
+        lesao.observacoes or ""
+    ) %}
+
+    {% set cirurgia = (
+        "Sim"
+        if "Cirurgia: Sim" in observacoes
+        else "Não"
+    ) %}
+
+    {% if lesao.jogos_lesionado >= 120 %}
+
+        {% set gravidade = "Alta" %}
+        {% set gravidade_cor = "danger" %}
+
+    {% elif lesao.jogos_lesionado >= 30 %}
+
+        {% set gravidade = "Moderada" %}
+        {% set gravidade_cor = "warning" %}
+
+    {% else %}
+
+        {% set gravidade = "Leve" %}
+        {% set gravidade_cor = "success" %}
+
+    {% endif %}
+
+    <div class="col-xl-6">
+
+        <div
+            class="
+            injury-card
+            position-relative
+            overflow-hidden
+            h-100
+            "
+        >
+
+            <!-- LOGO FUNDO -->
+            {% if jogador %}
+
+            <img
+                src="{{ jogador.logo_time }}"
+                style="
+                position:
+                absolute;
+
+                right:
+                -20px;
+
+                top:
+                50%;
+
+                transform:
+                translateY(-50%);
+
+                width:
+                180px;
+
+                opacity:
+                .05;
+
+                pointer-events:
+                none;
+                "
+            >
+
+            {% endif %}
+
+            <div class="p-4">
+
+                <div class="row align-items-center">
+
+                    <!-- FOTO -->
+                    <div
+                        class="
+                        col-md-3
+                        text-center
+                        "
+                    >
+
+                        {% if jogador %}
+
+                        <img
+                            src="{{ jogador.foto }}"
+                            class="img-fluid"
+                            style="
+                            max-height:
+                            140px;
+
+                            object-fit:
+                            contain;
+                            "
+                        >
+
+                        {% endif %}
+
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="col-md-7">
+
+                        <div
+                            class="
+                            d-flex
+                            align-items-center
+                            gap-2
+                            mb-2
+                            "
+                        >
+
+                            <h3
+                                class="
+                                fw-bold
+                                mb-0
+                                injury-card-title
+                                "
+                            >
+
+                                <a
+                                    href="/jogador/{{ lesao.jogador }}"
+                                    class="text-decoration-none"
+                                >
+
+                                    {{ lesao.jogador }}
+
+                                </a>
+
+                            </h3>
+
+                            {% if jogador %}
+
+                            <span
+                                class="
+                                badge
+                                rounded-pill
+                                px-3
+                                py-2
+                                team-badge
+                                "
+                            >
+
+                                {{ jogador.time }}
+
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+                        <!-- LESÃO -->
+                        <div class="mb-3">
+
+                            <span
+                                class="
+                                badge
+                                bg-danger
+                                fs-6
+                                px-3
+                                py-2
+                                "
+                            >
+
+                                {{ lesao.tipo_lesao }}
+
+                            </span>
+
+                        </div>
+
+                        <!-- DADOS -->
+                        <div
+                            class="
+                            row
+                            g-2
+                            "
+                        >
+
+                            <div class="col-6">
+
+                                <small class="detail-label">
+
+                                    CID
+
+                                </small>
+
+                                <div class="detail-value">
+
+                                    <strong>
+
+                                        {% if "CID:" in observacoes %}
+
+                                            {{ observacoes.split(
+                                                "CID:"
+                                            )[1].split(
+                                                "|"
+                                            )[0].strip() }}
+
+                                        {% else %}
+
+                                            N/A
+
+                                        {% endif %}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+
+                                <small class="detail-label">
+
+                                    Cirurgia
+
+                                </small>
+
+                                <div class="detail-value">
+
+                                    <strong>
+
+                                        {{ cirurgia }}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+
+                                <small class="detail-label">
+
+                                    Jogos Perdidos
+
+                                </small>
+
+                                <div class="detail-value">
+
+                                    <strong>
+
+                                        {{ lesao.jogos_lesionado }}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+
+                                <small class="detail-label">
+
+                                    Local
+
+                                </small>
+
+                                <div class="detail-value">
+
+                                    <strong>
+
+                                        {{ lesao.local_lesao }}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- STATUS -->
+                    <div
+                        class="
+                        col-md-2
+                        text-center
+                        "
+                    >
+
+                        <span
+                            class="
+                            badge
+                            bg-{{ gravidade_cor }}
+                            fs-6
+                            px-3
+                            py-2
+                            mb-2
+                            "
+                        >
+
+                            {{ gravidade }}
+
+                        </span>
+
+                        <br>
+
+                        {% if lesao.status == "out" %}
+
+                        <span
+                            class="
+                            badge
+                            bg-danger
+                            "
+                        >
+                            OUT
+                        </span>
+
+                        {% elif lesao.status == "questionavel" %}
+
+                        <span
+                            class="
+                            badge
+                            bg-warning
+                            text-dark
+                            "
+                        >
+                            ?
+                        </span>
+
+                        {% else %}
+
+                        <span
+                            class="
+                            badge
+                            bg-success
+                            "
+                        >
+                            OK
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <hr
+                    style="
+                    opacity:
+                    .08;
+                    "
+                >
+
+                <!-- FOOTER -->
+                <div
+                    class="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    "
+                >
+
+                    <small
+                        class="
+                        text-secondary
+                        "
+                    >
+
+                        {{ lesao.data_lesao }}
+
+                    </small>
+
+                    <div
+                        class="
+                        d-flex
+                        gap-2
+                        "
+                    >
+
+                        <a
+                            href="/jogador/{{ lesao.jogador }}"
+                            class="
+                            btn
+                            btn-sm
+                            btn-primary
+                            rounded-pill
+                            px-3
+                            "
+                        >
+
+                            Perfil
+
+                        </a>
+
+                        <a
+                            href="/editar/{{ lesao.id }}"
+                            class="
+                            btn
+                            btn-sm
+                            btn-warning
+                            rounded-pill
+                            px-3
+                            "
+                        >
+
+                            Editar
+
+                        </a>
+
+                        <a
+                            href="/deletar/{{ lesao.id }}"
+                            class="
+                            btn
+                            btn-sm
+                            btn-danger
+                            rounded-pill
+                            px-3
+                            "
+                        >
+
+                            Excluir
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    ✏️ Editar Lesão
+</h1>
+
+<div class="card p-4 shadow-lg">
+
+    <form method="POST">
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Jogador
+            </label>
+
+            <input
+                type="text"
+                name="jogador"
+                class="form-control"
+                value="{{ lesao.jogador }}"
+                required
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Tipo da lesão
+            </label>
+
+            <input
+                type="text"
+                name="tipo_lesao"
+                class="form-control"
+                value="{{ lesao.tipo_lesao }}"
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Local da lesão
+            </label>
+
+            <input
+                type="text"
+                name="local_lesao"
+                class="form-control"
+                value="{{ lesao.local_lesao }}"
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Status
+            </label>
+
+            <select
+                name="status"
+                class="form-select"
+            >
+
+                <option
+                    value="out"
+                    {% if lesao.status == "out" %}
+                        selected
+                    {% endif %}
+                >
+                    OUT
+                </option>
+
+                <option
+                    value="questionavel"
+                    {% if lesao.status == "questionavel" %}
+                        selected
+                    {% endif %}
+                >
+                    Questionável
+                </option>
+
+                <option
+                    value="ativo"
+                    {% if lesao.status == "ativo" %}
+                        selected
+                    {% endif %}
+                >
+                    Ativo
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Jogos lesionado
+            </label>
+
+            <input
+                type="number"
+                name="jogos_lesionado"
+                class="form-control"
+                value="{{ lesao.jogos_lesionado }}"
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Data da lesão
+            </label>
+
+            <input
+                type="date"
+                name="data_lesao"
+                class="form-control"
+                value="{{ lesao.data_lesao }}"
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Retorno previsto
+            </label>
+
+            <input
+                type="date"
+                name="retorno_previsto"
+                class="form-control"
+                value="{{ lesao.retorno_previsto }}"
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Observações
+            </label>
+
+            <textarea
+                name="observacoes"
+                class="form-control"
+                rows="4"
+            >{{ lesao.observacoes }}</textarea>
+
+        </div>
+
+        <button class="btn btn-warning">
+            Salvar Alterações
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

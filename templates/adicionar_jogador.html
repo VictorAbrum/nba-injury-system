@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}
+Adicionar Jogador
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    ➕ Adicionar Jogador
+</h1>
+
+<div class="card p-4 shadow-lg">
+
+<form method="POST">
+
+    <div class="mb-3">
+
+        <label>Nome</label>
+
+        <input
+            type="text"
+            name="jogador"
+            class="form-control"
+            required
+        >
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Time</label>
+
+        <input
+            type="text"
+            name="time"
+            class="form-control"
+        >
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <label>Idade</label>
+
+            <input
+                type="number"
+                name="idade"
+                class="form-control"
+            >
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>Altura</label>
+
+            <input
+                type="number"
+                step="0.01"
+                name="altura"
+                class="form-control"
+            >
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>Peso</label>
+
+            <input
+                type="number"
+                name="peso"
+                class="form-control"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Temporada</label>
+
+        <input
+            type="text"
+            name="temporada"
+            class="form-control"
+        >
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Jogos temporada</label>
+
+        <input
+            type="number"
+            name="jogos_temporada"
+            class="form-control"
+        >
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Foto URL</label>
+
+        <input
+            type="text"
+            name="foto"
+            class="form-control"
+        >
+
+    </div>
+
+    <div class="mb-3">
+
+        <label>Logo time URL</label>
+
+        <input
+            type="text"
+            name="logo_time"
+            class="form-control"
+        >
+
+    </div>
+
+    <button class="btn btn-success">
+        Salvar Jogador
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}

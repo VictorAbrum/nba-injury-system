@@ -1,0 +1,1105 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- HERO -->
+<div
+    class="card border-0 shadow-lg mb-5 overflow-hidden"
+    style="
+    border-radius: 28px;
+    background:
+    linear-gradient(
+        135deg,
+        #111827 0%,
+        #1e293b 50%,
+        #7c2d12 100%
+    );
+    "
+>
+
+    <div class="card-body p-5">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+
+                <span
+                    class="
+                    badge
+                    bg-danger
+                    px-3
+                    py-2
+                    mb-3
+                    "
+                >
+                    🏀 NBA Injury Intelligence
+                </span>
+
+                <h1
+                    class="
+                    fw-bold
+                    text-white
+                    mb-3
+                    "
+                    style="
+                    font-size:
+                    clamp(
+                        2rem,
+                        4vw,
+                        4rem
+                    );
+                    "
+                >
+
+                    Dashboard Médico
+                    Inteligente NBA
+
+                </h1>
+
+                <p
+                    class="
+                    text-light
+                    opacity-75
+                    fs-5
+                    mb-4
+                    "
+                >
+
+                    <strong>
+                        Plataforma inteligente
+                        para monitoramento,
+                        análise e predição
+
+                    <br>
+
+                        de lesões na NBA usando
+                        Machine Learning
+                    </strong>
+
+                    +
+                    <strong>
+                        CBR
+                    </strong>
+
+                </p>
+
+                <div
+                    class="
+                    d-flex
+                    gap-3
+                    flex-wrap
+                    "
+                >
+
+                    <a
+                        href="/jogadores"
+                        class="
+                        btn
+                        btn-danger
+                        btn-lg
+                        px-4
+                        "
+                    >
+                        👥 Jogadores
+                    </a>
+
+                    <a
+                        href="/estatisticas"
+                        class="
+                        btn
+                        btn-outline-light
+                        btn-lg
+                        px-4
+                        "
+                    >
+                        📊 Estatísticas
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 text-center mt-4 mt-lg-0">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/nba2.png'
+                    ) }}"
+
+                    alt="NBA"
+
+                    style="
+                    width:
+                    600px;
+
+                    max-width:
+                    none;
+
+                    opacity:
+                    .96;
+
+                    transform:
+                    translateX(-180px)
+                    scale(1.15);
+
+                    object-fit:
+                    contain;
+
+                    filter:
+                    drop-shadow(
+                        0 0 35px
+                        rgba(
+                            255,
+                            120,
+                            80,
+                            .18
+                        )
+                    );
+                    "
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- KPI CARDS -->
+<div class="row g-4 mb-5">
+
+    <!-- TOTAL LESÕES -->
+    <div class="col-xl-3 col-md-6">
+
+        <div
+            class="
+            card
+            border-0
+            shadow-sm
+            h-100
+            dashboard-card
+            "
+            style="
+            border-radius:
+            24px;
+            "
+        >
+
+            <div class="card-body p-4">
+
+                <div
+                    class="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    "
+                >
+
+                    <div>
+
+                        <p
+                            class="
+                            text-secondary
+                            mb-2
+                            fw-semibold
+                            "
+                        >
+                            Total Lesões
+                        </p>
+
+                        <h1 class="fw-bold">
+
+                            {{ total_lesoes }}
+
+                        </h1>
+
+                    </div>
+
+                    <div
+                        class="
+                        rounded-circle
+                        d-flex
+                        align-items-center
+                        justify-content-center
+                        "
+                        style="
+                        width:70px;
+                        height:70px;
+                        background:
+                        rgba(
+                            239,
+                            68,
+                            68,
+                            .15
+                        );
+                        font-size:
+                        2rem;
+                        "
+                    >
+                        🏥
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TOTAL JOGADORES -->
+    <div class="col-xl-3 col-md-6">
+
+        <div
+            class="
+            card
+            border-0
+            shadow-sm
+            h-100
+            dashboard-card
+            "
+            style="
+            border-radius:
+            24px;
+            "
+        >
+
+            <div class="card-body p-4">
+
+                <div
+                    class="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    "
+                >
+
+                    <div>
+
+                        <p
+                            class="
+                            text-secondary
+                            mb-2
+                            fw-semibold
+                            "
+                        >
+                            Jogadores
+                        </p>
+
+                        <h1 class="fw-bold">
+
+                            {{ total_jogadores }}
+
+                        </h1>
+
+                    </div>
+
+                    <div
+                        class="
+                        rounded-circle
+                        d-flex
+                        align-items-center
+                        justify-content-center
+                        "
+                        style="
+                        width:70px;
+                        height:70px;
+                        background:
+                        rgba(
+                            59,
+                            130,
+                            246,
+                            .15
+                        );
+                        font-size:
+                        2rem;
+                        "
+                    >
+                        👥
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MÉDIA -->
+    <div class="col-xl-3 col-md-6">
+
+        <div
+            class="
+            card
+            border-0
+            shadow-sm
+            h-100
+            dashboard-card
+            "
+            style="
+            border-radius:
+            24px;
+            "
+        >
+
+            <div class="card-body p-4">
+
+                <div
+                    class="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    "
+                >
+
+                    <div>
+
+                        <p
+                            class="
+                            text-secondary
+                            mb-2
+                            fw-semibold
+                            "
+                        >
+                            Média / Jogador
+                        </p>
+
+                        <h1 class="fw-bold">
+
+                            {{ media_lesoes }}
+
+                        </h1>
+
+                    </div>
+
+                    <div
+                        class="
+                        rounded-circle
+                        d-flex
+                        align-items-center
+                        justify-content-center
+                        "
+                        style="
+                        width:70px;
+                        height:70px;
+                        background:
+                        rgba(
+                            34,
+                            197,
+                            94,
+                            .15
+                        );
+                        font-size:
+                        2rem;
+                        "
+                    >
+                        📈
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MAIS COMUM -->
+    <div class="col-xl-3 col-md-6">
+
+        <div
+            class="
+            card
+            border-0
+            shadow-sm
+            h-100
+            dashboard-card
+            "
+            style="
+            border-radius:
+            24px;
+            "
+        >
+
+            <div class="card-body p-4">
+
+                <p
+                    class="
+                    text-secondary
+                    mb-2
+                    fw-semibold
+                    "
+                >
+                    Lesão Mais Comum
+                </p>
+
+                <h4 class="fw-bold">
+
+                    {{ tipo_mais_comum }}
+
+                </h4>
+
+                <span
+                    class="
+                    badge
+                    bg-warning
+                    text-dark
+                    mt-2
+                    "
+                >
+                    ⚠ Alta incidência
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- GRÁFICOS -->
+<div class="row g-4">
+
+    <!-- STATUS -->
+    <div class="col-lg-4">
+
+        <div
+            class="card border-0 shadow-sm h-100"
+            style="border-radius:24px;"
+        >
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between mb-4">
+
+                    <div>
+
+                        <h4 class="fw-bold mb-1">
+                            Status das Lesões
+                        </h4>
+
+                        <p class="text-secondary mb-0">
+                            Situação atual NBA
+                        </p>
+
+                    </div>
+
+                    <div class="fs-2">
+                        📊
+                    </div>
+
+                </div>
+
+                <div
+                    style="
+                    position:relative;
+                    height:420px;
+                    "
+                >
+
+                    <canvas
+                        id="statusChart"
+                    ></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TIPOS -->
+    <div class="col-lg-8">
+
+        <div
+            class="card border-0 shadow-sm h-100"
+            style="border-radius:24px;"
+        >
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between mb-4">
+
+                    <div>
+
+                        <h4 class="fw-bold mb-1">
+                            Tipos de Lesão
+                        </h4>
+
+                        <p class="text-secondary mb-0">
+                            Lesões mais frequentes
+                        </p>
+
+                    </div>
+
+                    <div class="fs-2">
+                        🏥
+                    </div>
+
+                </div>
+
+                <div
+                    style="
+                    position:relative;
+                    height:520px;
+                    padding:20px;
+                    "
+                >
+
+                    <canvas
+                        id="tipoChart"
+                    ></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- DASHBOARD -->
+<div class="row g-4 mt-1">
+
+    <!-- ÚLTIMAS LESÕES -->
+    <div class="col-12">
+
+        <div
+            class="card border-0 shadow-sm"
+            style="
+            border-radius:24px;
+            "
+        >
+
+            <div class="card-body p-4">
+
+                <div
+                    class="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    mb-4
+                    "
+                >
+
+                    <div>
+
+                        <h4 class="fw-bold mb-1">
+
+                            Últimas Lesões
+
+                        </h4>
+
+                        <p class="text-secondary mb-0">
+
+                            Atualizações recentes
+
+                        </p>
+
+                    </div>
+
+                    <span class="fs-2">
+
+                        🏥
+
+                    </span>
+
+                </div>
+
+                <div
+                    class="
+                    d-flex
+                    gap-3
+                    overflow-auto
+                    pb-2
+                    "
+                >
+
+                    {% for lesao in ultimas_lesoes %}
+
+                    <div
+                        class="
+                        card
+                        border-0
+                        p-3
+                        flex-shrink-0
+                        injury-modern
+                        "
+                        style="
+                        width:280px;
+                        border-radius:20px;
+                        background:
+                        rgba(
+                            255,
+                            255,
+                            255,
+                            .04
+                        );
+                        "
+                    >
+
+                        <h5
+                            class="
+                            fw-bold
+                            mb-2
+                            "
+                        >
+
+                            {{ lesao.jogador }}
+
+                        </h5>
+
+                        <span
+                            class="
+                            badge
+                            bg-danger
+                            mb-3
+                            "
+                        >
+
+                            {{ lesao.tipo_lesao }}
+
+                        </span>
+
+                        <small
+                            class="
+                            text-secondary
+                            "
+                        >
+
+                            {% if lesao.data_lesao %}
+
+                                {{ lesao.data_lesao }}
+
+                            {% else %}
+
+                                Sem data
+
+                            {% endif %}
+
+                        </small>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOP LESIONADOS -->
+    <div class="col-lg-6">
+
+        <div
+            class="
+            card
+            border-0
+            shadow-sm
+            h-100
+            "
+            style="
+            border-radius:24px;
+            "
+        >
+
+            <div class="card-body p-4">
+
+                <h4
+                    class="
+                    fw-bold
+                    mb-4
+                    "
+                >
+
+                    🔥 Top Lesionados
+
+                </h4>
+
+                {% for jogador, total in top_lesionados %}
+
+                <div class="mb-4">
+
+                    <div
+                        class="
+                        d-flex
+                        justify-content-between
+                        mb-2
+                        "
+                    >
+
+                        <span>
+
+                            {{ jogador }}
+
+                        </span>
+
+                        <strong>
+
+                            {{ total }}
+
+                        </strong>
+
+                    </div>
+
+                    <div
+                        class="progress"
+                        style="
+                        height:10px;
+                        border-radius:10px;
+                        "
+                    >
+
+                        <div
+                            class="
+                            progress-bar
+                            bg-danger
+                            "
+                            style="
+                            width:
+                            {{ total * 2 }}%;
+                            "
+                        ></div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TIMES MAIS LESIONADOS -->
+    <div class="col-lg-6">
+
+        <div
+            class="
+            card
+            border-0
+            shadow-sm
+            h-100
+            "
+            style="
+            border-radius:24px;
+            "
+        >
+
+            <div class="card-body p-4">
+
+                <h4
+                    class="
+                    fw-bold
+                    mb-4
+                    "
+                >
+
+                    🏀 Times Mais Lesionados
+
+                </h4>
+
+                {% for time, total in top_times %}
+
+                <div class="mb-4">
+
+                    <div
+                        class="
+                        d-flex
+                        justify-content-between
+                        mb-2
+                        "
+                    >
+
+                        <span>
+
+                            {{ time }}
+
+                        </span>
+
+                        <strong>
+
+                            {{ total }}
+
+                        </strong>
+
+                    </div>
+
+                    <div
+                        class="progress"
+                        style="
+                        height:10px;
+                        border-radius:10px;
+                        "
+                    >
+
+                        <div
+                            class="
+                            progress-bar
+                            bg-primary
+                            "
+                            style="
+                            width:
+                            {{ total / 2 }}%;
+                            "
+                        ></div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHARTS -->
+<script>
+
+const textColor =
+
+document.body.getAttribute(
+    "data-theme"
+)
+
+=== "dark"
+
+? "#f8fafc"
+
+: "#111827";
+
+
+// STATUS
+new Chart(
+
+document.getElementById(
+    'statusChart'
+),
+
+{
+    type: 'doughnut',
+
+    data: {
+
+        labels: [
+
+            'OUT',
+            'Questionável',
+            'Ativo'
+        ],
+
+        datasets: [{
+
+            data: [
+
+                {{ status_count['out'] }},
+
+                {{ status_count['questionavel'] }},
+
+                {{ status_count['ativo'] }}
+
+            ],
+
+            backgroundColor: [
+
+                '#ef4444',
+                '#facc15',
+                '#22c55e'
+
+            ],
+
+            borderWidth: 0
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+
+                position: 'bottom',
+
+                labels: {
+
+                    color: textColor
+                }
+            }
+        }
+    }
+});
+
+
+// TIPO LESÃO
+new Chart(
+
+document.getElementById(
+    'tipoChart'
+),
+
+{
+    type: 'bar',
+
+    data: {
+
+        labels:
+        {{ tipos_labels|tojson }},
+
+        datasets: [{
+
+            label:
+            'Lesões',
+
+            data:
+            {{ tipos_values|tojson }},
+
+            backgroundColor:
+            '#3b82f6',
+
+            borderRadius:
+            14
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio:
+        false,
+
+        plugins: {
+
+            legend: {
+
+                display:
+                false
+            }
+        },
+
+        scales: {
+
+            x: {
+
+                ticks: {
+
+                    color:
+                    textColor,
+
+                    font: {
+
+                        size:
+                        12,
+
+                        weight:
+                        'bold'
+                    },
+
+                    maxRotation:
+                    25,
+
+                    minRotation:
+                    25,
+
+                    padding:
+                    10
+                },
+
+                grid: {
+
+                    display:
+                    false
+                }
+            },
+
+            y: {
+
+                beginAtZero:
+                true,
+
+                ticks: {
+
+                    color:
+                    textColor,
+
+                    font: {
+
+                        size:
+                        12
+                    }
+                },
+
+                grid: {
+
+                    color:
+                    'rgba(255,255,255,.08)'
+                }
+            }
+        }
+    }
+});
+
+</script>
+
+<style>
+
+.dashboard-card{
+
+transition:
+all .25s ease;
+
+}
+
+.dashboard-card:hover{
+
+transform:
+translateY(-6px);
+
+}
+
+.injury-modern{
+
+transition:
+all .2s ease;
+
+}
+
+.injury-modern:hover{
+
+transform:
+scale(1.02);
+
+}
+
+</style>
+
+{% endblock %}

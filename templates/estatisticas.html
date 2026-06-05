@@ -1,0 +1,768 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}
+
+Estatísticas
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<div class="d-flex align-items-center mb-4">
+
+    <h1 class="mb-0">
+        📊 Estatísticas NBA
+    </h1>
+
+</div>
+
+
+
+<!-- CARDS -->
+
+<div class="row mb-4">
+
+
+
+    <div class="col-md-4 mb-3">
+
+
+
+        <div class="card p-4 shadow-lg h-100 stat-card">
+
+
+
+            <h6 class="stat-title">
+                Total de Lesões
+            </h6>
+
+
+
+            <h2 class="fw-bold">
+                {{ tipo_values|sum }}
+            </h2>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="col-md-4 mb-3">
+
+
+
+        <div class="card p-4 shadow-lg h-100 stat-card">
+
+
+
+            <h6 class="stat-title">
+                Jogadores Afetados
+            </h6>
+
+
+
+            <h2 class="fw-bold">
+                {{ top_labels|length }}
+            </h2>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="col-md-4 mb-3">
+
+
+
+        <div class="card p-4 shadow-lg h-100 stat-card">
+
+
+
+            <h6 class="stat-title">
+                Lesão Mais Comum
+            </h6>
+
+
+
+            <h2 class="fw-bold fs-4 text-truncate mt-1" style="background: none; -webkit-text-fill-color: unset; color: var(--text) !important;">
+                {{ tipo_labels[0]|default('Nenhuma') }}
+            </h2>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+<div class="row">
+
+
+
+    <!-- TOP JOGADORES -->
+
+    <div class="col-lg-6 mb-4">
+
+
+
+        <div class="card p-4 shadow-lg stat-card">
+
+
+
+            <h4 class="mb-4">
+                🏀 Top Jogadores Lesionados
+            </h4>
+
+
+
+            <div style="height:380px; position: relative;">
+
+                <canvas id="topChart"></canvas>
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <!-- TIMES -->
+
+    <div class="col-lg-6 mb-4">
+
+
+
+        <div class="card p-4 shadow-lg stat-card">
+
+
+
+            <h4 class="mb-4">
+                🏥 Times com Mais Lesões
+            </h4>
+
+
+
+            <div style="height:380px; position: relative;">
+
+                <canvas id="timeChart"></canvas>
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+<!-- LESÕES -->
+
+<div class="card p-4 shadow-lg stat-card mb-4">
+
+
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+
+        <h4 class="mb-0">
+            🩺 Lesões Mais Comuns
+        </h4>
+
+
+
+        <small class="text-secondary">
+            Clique futuramente para detalhes
+        </small>
+
+
+
+    </div>
+
+
+
+    <div style="height:420px; max-width:900px; margin:auto; position: relative; width: 100%;">
+
+        <canvas id="tipoChart"></canvas>
+
+    </div>
+
+
+
+</div>
+
+
+
+<style>
+
+.stat-card {
+
+    border-radius: 24px;
+
+    border: 1px solid var(--border) !important;
+
+    background: var(--card) !important;
+
+    backdrop-filter: blur(12px);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+
+    transform:
+        translateY(-4px);
+}
+
+.stat-title {
+
+    opacity: .75;
+
+    font-size: 0.85rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+
+    color: var(--secondary) !important;
+}
+
+.stat-card h2 {
+
+    font-family: 'Outfit', sans-serif;
+
+    font-weight: 700;
+}
+
+</style>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+
+
+    let topChartInstance = null;
+
+    let timeChartInstance = null;
+
+    let tipoChartInstance = null;
+
+
+
+    function renderCharts() {
+
+
+
+        const isDark =
+            document.body.getAttribute("data-theme") === "dark";
+
+        const textColor =
+            isDark
+            ? "#f8fafc"
+            : "#0f172a";
+
+        const gridColor =
+            isDark
+            ? "rgba(255, 255, 255, 0.08)"
+            : "rgba(0, 0, 0, 0.08)";
+
+        const tooltipBg =
+            isDark
+            ? "#0f172a"
+            : "#FFFFFF";
+
+        const primaryBarColor =
+            isDark
+            ? 'rgba(59, 130, 246, 0.85)'
+            : 'rgba(37, 99, 235, 0.85)';
+
+        const primaryHoverColor =
+            isDark
+            ? '#60a5fa'
+            : '#1d4ed8';
+
+        const secondaryBarColor =
+            isDark
+            ? 'rgba(255, 107, 0, 0.85)'
+            : 'rgba(230, 92, 0, 0.85)';
+
+        const secondaryHoverColor =
+            isDark
+            ? '#ff8533'
+            : '#b34700';
+
+
+
+        Chart.defaults.color = textColor;
+
+        Chart.defaults.font.family = "'Outfit', sans-serif";
+
+        Chart.defaults.borderColor = gridColor;
+
+
+
+        const commonOptions = {
+
+            responsive:
+                true,
+
+            maintainAspectRatio:
+                false,
+
+            animation: {
+
+                duration:
+                    600
+            },
+
+            plugins: {
+
+                tooltip: {
+
+                    backgroundColor:
+                        tooltipBg,
+
+                    titleColor:
+                        textColor,
+
+                    bodyColor:
+                        textColor,
+
+                    borderWidth:
+                        1,
+
+                    borderColor:
+                        gridColor
+                }
+            }
+        };
+
+
+
+        if (topChartInstance) {
+
+            topChartInstance.destroy();
+        }
+
+        if (timeChartInstance) {
+
+            timeChartInstance.destroy();
+        }
+
+        if (tipoChartInstance) {
+
+            tipoChartInstance.destroy();
+        }
+
+
+
+        // =====================
+        // 1. TOP JOGADORES
+        // =====================
+
+        topChartInstance = new Chart(
+
+            document.getElementById("topChart"),
+
+            {
+
+                type:
+                    "bar",
+
+                data: {
+
+                    labels:
+                        {{ top_labels[:12]|tojson }},
+
+                    datasets: [{
+
+                        data:
+                            {{ top_values[:12]|tojson }},
+
+                        backgroundColor:
+                            primaryBarColor,
+
+                        hoverBackgroundColor:
+                            primaryHoverColor,
+
+                        borderRadius:
+                            8,
+
+                        barThickness:
+                            16
+                    }]
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    indexAxis:
+                        "y",
+
+                    plugins: {
+
+                        ...commonOptions.plugins,
+
+                        legend: {
+
+                            display:
+                                false
+                        }
+                    },
+
+                    scales: {
+
+                        x: {
+
+                            beginAtZero:
+                                true,
+
+                            grid: {
+
+                                color:
+                                    gridColor
+                            },
+
+                            ticks: {
+
+                                color:
+                                    textColor
+                            }
+                        },
+
+                        y: {
+
+                            grid: {
+
+                                display:
+                                    false
+                            },
+
+                            ticks: {
+
+                                color:
+                                    textColor,
+
+                                font: {
+
+                                    size:
+                                        11
+                                }
+                            }
+                        }
+                    },
+
+                    onClick: (event, activeElements) => {
+
+                        if (activeElements.length > 0) {
+
+                            const index =
+                                activeElements[0].index;
+
+                            const label =
+                                topChartInstance.data.labels[index];
+
+                            window.location.href =
+                                `/jogador/` + encodeURIComponent(label);
+                        }
+                    },
+
+                    onHover: (event, activeElements) => {
+
+                        event.native.target.style.cursor =
+                            activeElements.length > 0
+                            ? 'pointer'
+                            : 'default';
+                    }
+                }
+            }
+        );
+
+
+
+        // =====================
+        // 2. TIMES
+        // =====================
+
+        timeChartInstance = new Chart(
+
+            document.getElementById("timeChart"),
+
+            {
+
+                type:
+                    "bar",
+
+                data: {
+
+                    labels:
+                        {{ time_labels[:10]|tojson }},
+
+                    datasets: [{
+
+                        data:
+                            {{ time_values[:10]|tojson }},
+
+                        backgroundColor:
+                            secondaryBarColor,
+
+                        hoverBackgroundColor:
+                            secondaryHoverColor,
+
+                        borderRadius:
+                            8,
+
+                        barThickness:
+                            16
+                    }]
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    indexAxis:
+                        "y",
+
+                    plugins: {
+
+                        ...commonOptions.plugins,
+
+                        legend: {
+
+                            display:
+                                false
+                        }
+                    },
+
+                    scales: {
+
+                        x: {
+
+                            beginAtZero:
+                                true,
+
+                            grid: {
+
+                                color:
+                                    gridColor
+                            },
+
+                            ticks: {
+
+                                color:
+                                    textColor
+                            }
+                        },
+
+                        y: {
+
+                            grid: {
+
+                                display:
+                                    false
+                            },
+
+                            ticks: {
+
+                                color:
+                                    textColor,
+
+                                font: {
+
+                                    size:
+                                        11
+                                }
+                            }
+                        }
+                    },
+
+                    onClick: (event, activeElements) => {
+
+                        if (activeElements.length > 0) {
+
+                            const index =
+                                activeElements[0].index;
+
+                            const label =
+                                timeChartInstance.data.labels[index];
+
+                            window.location.href =
+                                `/lesoes?busca=` + encodeURIComponent(label);
+                        }
+                    },
+
+                    onHover: (event, activeElements) => {
+
+                        event.native.target.style.cursor =
+                            activeElements.length > 0
+                            ? 'pointer'
+                            : 'default';
+                    }
+                }
+            }
+        );
+
+
+
+        // =====================
+        // 3. LESÕES (DOUGHNUT)
+        // =====================
+
+        tipoChartInstance = new Chart(
+
+            document.getElementById("tipoChart"),
+
+            {
+
+                type:
+                    "doughnut",
+
+                data: {
+
+                    labels:
+                        {{ tipo_labels[:10]|tojson }},
+
+                    datasets: [{
+
+                        data:
+                            {{ tipo_values[:10]|tojson }},
+
+                        backgroundColor: [
+                            '#ff5a5f', '#00f0ff', '#00e676', '#ffb300', '#7c4dff',
+                            '#ff4081', '#009688', '#ff6d00', '#00b0ff', '#aeea00'
+                        ],
+
+                        borderWidth:
+                            0
+                    }]
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    cutout:
+                        "68%",
+
+                    plugins: {
+
+                        ...commonOptions.plugins,
+
+                        legend: {
+
+                            position:
+                                "right",
+
+                            labels: {
+
+                                color:
+                                    textColor,
+
+                                padding:
+                                    20,
+
+                                usePointStyle:
+                                    true,
+
+                                font: {
+
+                                    size:
+                                        12
+                                }
+                            }
+                        }
+                    },
+
+                    onClick: (event, activeElements) => {
+
+                        if (activeElements.length > 0) {
+
+                            const index =
+                                activeElements[0].index;
+
+                            const label =
+                                tipoChartInstance.data.labels[index];
+
+                            window.location.href =
+                                `/lesoes?busca=` + encodeURIComponent(label);
+                        }
+                    },
+
+                    onHover: (event, activeElements) => {
+
+                        event.native.target.style.cursor =
+                            activeElements.length > 0
+                            ? 'pointer'
+                            : 'default';
+                    }
+                }
+            }
+        );
+
+
+
+    }
+
+
+
+    renderCharts();
+
+
+
+    window.addEventListener('themeChanged', renderCharts);
+
+
+
+});
+
+</script>
+
+
+
+{% endblock %}

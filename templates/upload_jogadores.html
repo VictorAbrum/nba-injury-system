@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}
+Upload Jogadores
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    📥 Upload Jogadores
+</h1>
+
+<div class="row">
+
+    <!-- CSV -->
+    <div class="col-lg-6 mb-4">
+
+        <div class="card p-4">
+
+            <h4 class="mb-3">
+                📄 Upload CSV
+            </h4>
+
+            <p class="text-secondary">
+
+                Envie um arquivo CSV
+                de jogadores.
+
+            </p>
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <input
+                    type="hidden"
+                    name="tipo"
+                    value="csv"
+                >
+
+                <div class="mb-3">
+
+                    <input
+                        type="file"
+                        name="arquivo"
+                        class="form-control"
+                    >
+
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                >
+                    Enviar CSV
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- NBA API -->
+    <div class="col-lg-6 mb-4">
+
+        <div class="card p-4">
+
+            <h4 class="mb-3">
+                🏀 Importar Time NBA
+            </h4>
+
+            <p class="text-secondary">
+
+                Digite o nome do time
+                ou cole o link do roster
+                da NBA.
+
+            </p>
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="tipo"
+                    value="nba"
+                >
+
+                <div class="mb-3">
+
+                    <input
+                        type="text"
+                        name="time_nba"
+                        class="form-control"
+
+                        placeholder="
+                        Ex:
+                        Boston Celtics
+                        ou
+                        https://www.nba.com/celtics/roster
+                        "
+
+                        required
+                    >
+
+                </div>
+
+                <button
+                    class="btn btn-success"
+                >
+                    Importar Time
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+jogador,idade,altura,peso,time,tipo_lesao,local_lesao,status,jogos_lesionado,historico_lesoes,temporada,dias_retorno_real,retorno_estimado,recorrencia,resultado_final
+Tyrese Haliburton,25,1.96,84,Pacers,Hamstring Strain,Perna,out,10,2,2025,21,18,sim,retornou_bem
+Anthony Davis,32,2.08,115,Lakers,Knee Soreness,Joelho,questionavel,6,4,2025,14,16,sim,recorrente
+Stephen Curry,37,1.88,84,Warriors,Ankle Sprain,Tornozelo,out,8,3,2025,17,15,sim,retornou_bem
+Joel Embiid,31,2.13,127,76ers,Meniscus Injury,Joelho,out,18,5,2025,35,30,sim,recorrente
+Jimmy Butler,35,2.01,104,Heat,Hamstring Strain,Perna,questionavel,7,2,2025,16,14,sim,retornou_bem
+Luka Doncic,26,2.01,104,Mavericks,Calf Strain,Perna,out,9,1,2025,19,20,nao,retornou_bem
+Ja Morant,25,1.88,79,Grizzlies,Shoulder Injury,Ombro,out,15,2,2025,28,25,sim,retornou_bem
+Jayson Tatum,27,2.03,95,Celtics,Ankle Sprain,Tornozelo,ativo,3,1,2025,7,8,nao,retornou_bem
+Kawhi Leonard,34,2.01,102,Clippers,Knee Inflammation,Joelho,out,20,6,2025,42,38,sim,recorrente
+Zion Williamson,25,1.98,129,Pelicans,Hamstring Strain,Perna,out,12,4,2025,24,22,sim,recorrente

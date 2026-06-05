@@ -1,0 +1,885 @@
+{% extends "base.html" %}
+
+{% block title %}
+Jogadores
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.player-modern {
+
+    position: relative;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(255,255,255,.04),
+        rgba(255,255,255,.02)
+    );
+
+    border:
+    1px solid
+    rgba(255,255,255,.08);
+
+    backdrop-filter:
+    blur(14px);
+
+    min-height:
+    420px;
+}
+
+.team-card::before {
+
+    content:
+    "";
+
+    position:
+    absolute;
+
+    inset:
+    0;
+
+    background-image:
+    var(--team-logo);
+
+    background-repeat:
+    no-repeat;
+
+    background-position:
+    center 15%;
+
+    background-size:
+    70%;
+
+    opacity:
+    .15;
+
+    pointer-events:
+    none;
+
+    z-index:
+    0;
+
+    filter:
+    grayscale(33%);
+}
+
+.team-card > * {
+
+    position:
+    relative;
+
+    z-index:
+    2;
+}
+
+.player-modern:hover {
+
+    transform:
+    translateY(-10px)
+    scale(1.02);
+
+    box-shadow:
+    0 30px 60px
+    rgba(0,0,0,.35);
+
+    border:
+    1px solid
+    rgba(
+        59,
+        130,
+        246,
+        .25
+    );
+}
+
+.player-photo {
+
+    width:
+    100%;
+
+    height:
+    280px;
+
+    object-fit:
+    contain;
+
+    padding-top:
+    15px;
+}
+
+.selection-mode
+.player-modern {
+
+    cursor:
+    pointer;
+}
+
+.selected-player {
+
+    border:
+    2px solid
+    #ef4444 !important;
+
+    box-shadow:
+    0 0 30px
+    rgba(
+        239,
+        68,
+        68,
+        .30
+    );
+}
+
+.select-badge {
+
+    position:
+    absolute;
+
+    top:
+    15px;
+
+    right:
+    15px;
+
+    width:
+    35px;
+
+    height:
+    35px;
+
+    border-radius:
+    50%;
+
+    background:
+    rgba(0,0,0,.7);
+
+    display:
+    none;
+
+    justify-content:
+    center;
+
+    align-items:
+    center;
+
+    color:
+    white;
+
+    font-size:
+    18px;
+
+    z-index:
+    10;
+}
+
+.selection-mode
+.select-badge {
+
+    display:
+    flex;
+}
+
+.hero-mini {
+
+    border-radius:
+    30px;
+
+    padding:
+    45px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #111827,
+        #1e293b,
+        #7c2d12
+    );
+
+    margin-bottom:
+    35px;
+}
+
+.search-modern {
+
+    border-radius:
+    18px;
+
+    border:
+    none;
+
+    padding:
+    18px 24px;
+}
+
+</style>
+
+
+<!-- HERO -->
+<div class="hero-mini text-white">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-8">
+
+            <h1
+                class="
+                fw-bold
+                display-5
+                mb-3
+                "
+            >
+
+                🏀 Jogadores NBA
+
+            </h1>
+
+            <p
+                class="
+                text-light
+                opacity-75
+                mb-0
+                "
+            >
+
+                Explore jogadores,
+                histórico e lesões
+                monitoradas pela IA.
+
+            </p>
+
+        </div>
+
+        <div
+            class="
+            col-lg-4
+            text-end
+            "
+        >
+
+            <div
+                style="
+                font-size:
+                5rem;
+                opacity:
+                .8;
+                "
+            >
+
+                ⛹️
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOPO -->
+<div
+    class="
+    d-flex
+    justify-content-between
+    align-items-center
+    flex-wrap
+    gap-3
+    mb-4
+    "
+>
+
+    <div
+        class="
+        d-flex
+        gap-2
+        "
+    >
+
+        <a
+            href="/adicionar-jogador"
+            class="
+            btn
+            btn-success
+            px-4
+            py-2
+            rounded-pill
+            "
+        >
+
+            ➕ Adicionar
+
+        </a>
+
+        <button
+            id="toggleSelection"
+            class="
+            btn
+            btn-outline-danger
+            px-4
+            rounded-pill
+            "
+        >
+
+            Selecionar
+
+        </button>
+
+    </div>
+
+
+    <form
+        method="GET"
+        class="w-100"
+    >
+
+        <div class="row g-3">
+
+            <div class="col-lg-5">
+
+                <input
+                    type="text"
+                    name="busca"
+                    class="
+                    form-control
+                    search-modern
+                    "
+                    placeholder="🔍 Buscar jogador..."
+                    value="{{ busca }}"
+                >
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <select
+                    name="time"
+                    class="
+                    form-select
+                    search-modern
+                    "
+                >
+
+                    <option value="">
+                        Todos os times
+                    </option>
+
+                    {% for time in times %}
+
+                    <option
+                        value="{{ time }}"
+                        {% if time_filtro == time %}
+                        selected
+                        {% endif %}
+                    >
+
+                        {{ time }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <button
+                    class="
+                    btn
+                    btn-primary
+                    w-100
+                    h-100
+                    rounded-pill
+                    "
+                >
+
+                    Buscar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<form
+    method="POST"
+    action="/deletar-jogadores"
+    id="deleteForm"
+>
+
+<div
+    class="
+    d-none
+    mb-4
+    "
+    id="deleteActions"
+>
+
+    <button
+        type="submit"
+        class="
+        btn
+        btn-danger
+        rounded-pill
+        px-4
+        "
+    >
+
+        Excluir
+        (<span id="selectedCount">
+            0
+        </span>)
+
+    </button>
+
+</div>
+
+
+<div class="row g-4">
+
+{% for jogador in jogadores %}
+
+<div class="col-xl-3 col-lg-4 col-md-6">
+
+    <div
+        class="player-wrapper"
+        data-player-card
+    >
+
+        <a
+            href="/jogador/{{ jogador.jogador }}"
+            class="
+            text-decoration-none
+            player-link
+            "
+        >
+
+            <div
+                class="
+                player-modern
+                h-100
+                team-card
+                "
+
+                style="
+                --team-logo:
+                url('{{ jogador.logo_time }}');
+                "
+            >
+
+                <!-- seleção -->
+                <div
+                    class="select-badge"
+                >
+
+                    ✓
+
+                </div>
+
+                <!-- imagem -->
+                <div
+                    class="
+                    text-center
+                    position-relative
+                    "
+                >
+
+                    <img
+                        src="{{ jogador.foto }}"
+                        class="
+                        player-photo
+                        {% if jogador.jogador == 'Tyrese Haliburton' %}
+                        tyrese-fix
+                        {% endif %}
+                        "
+                    >
+
+                </div>
+
+                <!-- conteúdo -->
+                <div
+                    class="
+                    p-4
+                    text-center
+                    "
+                >
+
+                    <h4
+                        class="
+                        fw-bold
+                        text-white
+                        mb-2
+                        "
+                    >
+
+                        {{ jogador.jogador }}
+
+                    </h4>
+
+                    <span
+                        class="
+                        badge
+                        rounded-pill
+                        px-3
+                        py-2
+                        mb-3
+                        "
+
+                        style="
+                        background:
+                        rgba(
+                            59,
+                            130,
+                            246,
+                            .18
+                        );
+
+                        border:
+                        1px solid
+                        rgba(
+                            59,
+                            130,
+                            246,
+                            .25
+                        );
+
+                        color:
+                        #ffffff;
+
+                        font-weight:
+                        600;
+                        "
+                    >
+
+                        {{ jogador.time }}
+
+                    </span>
+
+                    <div
+                        class="
+                        row
+                        text-center
+                        mt-3
+                        "
+                    >
+
+                        <div class="col-4">
+
+                            <small
+                                class="
+                                text-secondary
+                                d-block
+                                "
+                            >
+                                Idade
+                            </small>
+
+                            <strong>
+
+                                {{ jogador.idade }}
+
+                            </strong>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <small
+                                class="
+                                text-secondary
+                                d-block
+                                "
+                            >
+                                Altura
+                            </small>
+
+                            <strong>
+
+                                {{ jogador.altura }}
+
+                            </strong>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <small
+                                class="
+                                text-secondary
+                                d-block
+                                "
+                            >
+                                Peso
+                            </small>
+
+                            <strong>
+
+                                {{ jogador.peso }}
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <hr
+                        style="
+                        opacity:
+                        .1;
+                        "
+                    >
+
+                    <div
+                        class="
+                        d-flex
+                        justify-content-between
+                        "
+                    >
+
+                        <span
+                            class="
+                            text-secondary
+                            "
+                        >
+
+                            Temporada
+
+                        </span>
+
+                        <strong>
+
+                            {{ jogador.temporada }}
+
+                        </strong>
+
+                    </div>
+
+                    <div
+                        class="
+                        d-flex
+                        justify-content-between
+                        mt-2
+                        "
+                    >
+
+                        <span
+                            class="
+                            text-secondary
+                            "
+                        >
+
+                            Jogos
+
+                        </span>
+
+                        <strong>
+
+                            {{ jogador.jogos_temporada }}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        <!-- checkbox hidden -->
+        <input
+            type="checkbox"
+            name="jogadores"
+            value="{{ jogador.jogador }}"
+            class="d-none player-checkbox"
+        >
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</form>
+
+
+<script>
+
+let selectionMode =
+false
+
+const toggleButton =
+
+document.getElementById(
+    "toggleSelection"
+)
+
+const deleteActions =
+
+document.getElementById(
+    "deleteActions"
+)
+
+const selectedCount =
+
+document.getElementById(
+    "selectedCount"
+)
+
+toggleButton.addEventListener(
+
+    "click",
+
+    function () {
+
+        selectionMode =
+        !selectionMode
+
+        document.body.classList.toggle(
+
+            "selection-mode"
+
+        )
+
+        deleteActions.classList.toggle(
+
+            "d-none"
+        )
+
+        toggleButton.innerText =
+
+        selectionMode
+
+        ? "Cancelar"
+
+        : "Selecionar"
+
+    }
+)
+
+
+document.querySelectorAll(
+
+    "[data-player-card]"
+
+).forEach(card => {
+
+    card.addEventListener(
+
+        "click",
+
+        function(e) {
+
+            if (
+                !selectionMode
+            ) return
+
+            e.preventDefault()
+
+            const checkbox =
+
+            card.querySelector(
+                ".player-checkbox"
+            )
+
+            checkbox.checked =
+
+            !checkbox.checked
+
+            card
+            .querySelector(
+                ".player-modern"
+            )
+            .classList.toggle(
+
+                "selected-player",
+
+                checkbox.checked
+            )
+
+            updateSelected()
+        }
+    )
+})
+
+
+function updateSelected() {
+
+    const checked =
+
+    document.querySelectorAll(
+
+        ".player-checkbox:checked"
+
+    ).length
+
+    selectedCount.innerText =
+    checked
+}
+
+
+document.getElementById(
+
+    "deleteForm"
+
+).addEventListener(
+
+    "submit",
+
+    function(e) {
+
+        const checked =
+
+        document.querySelectorAll(
+
+            ".player-checkbox:checked"
+
+        ).length
+
+        if (
+            checked === 0
+        ) {
+
+            e.preventDefault()
+
+            return
+        }
+
+        const confirmDelete =
+
+        confirm(
+
+            `Excluir ${checked} jogador(es)?`
+        )
+
+        if (
+            !confirmDelete
+        ) {
+
+            e.preventDefault()
+        }
+    }
+)
+
+</script>
+
+{% endblock %}

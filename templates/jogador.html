@@ -1,0 +1,595 @@
+{% extends "base.html" %}
+
+{% block title %}
+Jogador
+{% endblock %}
+
+{% block content %}
+
+{% if jogador %}
+
+<!-- HERO -->
+<div class="player-hero shadow-lg mb-5">
+
+    <img
+        src="{{ jogador.logo_time }}"
+        class="hero-bg-logo"
+    >
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-4 text-center">
+
+            <img
+                src="{{ jogador.foto }}"
+                class="hero-player-img"
+            >
+
+        </div>
+
+        <div class="col-lg-8">
+
+            <h1 class="display-2 fw-bold mb-2">
+                {{ jogador.jogador }}
+            </h1>
+
+            <a
+                href="{{ url_for('perfil_time', nome=jogador.time) }}"
+                class="hero-team-link"
+            >
+                {{ jogador.time }}
+            </a>
+
+            <!-- STATUS -->
+            <div class="mt-4 mb-4">
+
+                {% if status_atual == "out" %}
+
+                <span class="badge bg-danger fs-5 px-4 py-3">
+                    🔴 OUT
+                </span>
+
+                {% elif status_atual == "questionavel" %}
+
+                <span class="badge bg-warning text-dark fs-5 px-4 py-3">
+                    🟡 Questionável
+                </span>
+
+                {% else %}
+
+                <span class="badge bg-success fs-5 px-4 py-3">
+                    🟢 Ativo
+                </span>
+
+                {% endif %}
+
+            </div>
+
+            <!-- RISCO -->
+            <div class="mb-4">
+
+                <div class="d-flex justify-content-between mb-2">
+
+                    <strong>
+                        Risco de Lesão
+                    </strong>
+
+                    <span class="text-{{ risco_cor }}">
+                        {{ risco|upper }}
+                    </span>
+
+                </div>
+
+                <div class="progress hero-progress">
+
+                    <div
+                        class="progress-bar bg-{{ risco_cor }}"
+                        style="width:
+                        {{ risco_percentual }}%"
+                    >
+                        {{ risco_percentual }}%
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BOTÕES -->
+            <div class="d-flex gap-3 flex-wrap">
+
+                <a
+                    href="/adicionar-lesao/{{ jogador.jogador }}"
+                    class="btn btn-danger btn-lg"
+                >
+                    ➕ Adicionar Lesão
+                </a>
+
+                <a
+                    href="/deletar-jogador/{{ jogador.jogador }}"
+                    class="btn btn-outline-danger btn-lg"
+                    onclick="return confirm('Excluir jogador?')"
+                >
+                    🗑 Excluir Jogador
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- KPIs -->
+<div class="row mb-4">
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg h-100 text-center">
+
+            <h5>🏥 Lesões</h5>
+
+            <h1 class="display-5">
+                {{ total_lesoes }}
+            </h1>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg h-100 text-center">
+
+            <h5>❌ Jogos Perdidos</h5>
+
+            <h1 class="display-5">
+                {{ total_jogos_perdidos }}
+            </h1>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg h-100 text-center">
+
+            <h5>📊 Disponibilidade</h5>
+
+            <h1 class="display-5 text-success">
+                {{ disponibilidade }}%
+            </h1>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card p-4 shadow-lg h-100 text-center">
+
+            <h5>📉 Jogos Perdidos</h5>
+
+            <h1 class="display-5 text-danger">
+                {{ percentual_jogos_perdidos }}%
+            </h1>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- IA MÉDICA -->
+{% if cbr_resultado or ml_previsao %}
+
+<div class="card border-0 shadow-lg mb-5 overflow-hidden">
+
+    <div class="bg-dark text-white p-4">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+            <div>
+
+                <h2 class="mb-1">
+                    🧠 Inteligência Médica
+                </h2>
+
+                <p class="mb-0 text-light opacity-75">
+
+                    Predição baseada em
+                    Machine Learning +
+                    CBR NBA
+
+                </p>
+
+            </div>
+
+            {% if lesao_normalizada %}
+
+            <span class="badge bg-danger fs-6 px-3 py-2">
+
+                {{ lesao_normalizada }}
+
+            </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="card-body p-4">
+
+        <!-- KPIs -->
+        <div class="row g-4 text-center mb-4">
+
+            <!-- CBR -->
+            <div class="col-lg-4">
+
+                <div class="card border-0 h-100 p-4 medical-card">
+
+                    <div class="mb-2 fs-1">
+                        🧠
+                    </div>
+
+                    <h6 class="text-secondary">
+                        Casos Similares NBA
+                    </h6>
+
+                    <h1 class="display-5 fw-bold">
+
+                        {% if cbr_resultado %}
+
+                            {{
+                            cbr_resultado.get(
+                                "dias_estimados",
+                                "-"
+                            )
+                            }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </h1>
+
+                    <small class="text-muted">
+                        dias
+                    </small>
+
+                </div>
+
+            </div>
+
+            <!-- ML -->
+            <div class="col-lg-4">
+
+                <div class="card border-0 h-100 p-4 medical-card">
+
+                    <div class="mb-2 fs-1">
+                        🤖
+                    </div>
+
+                    <h6 class="text-secondary">
+                        Machine Learning
+                    </h6>
+
+                    <h1 class="display-5 fw-bold text-primary">
+
+                        {% if ml_previsao is not none %}
+
+                            {{ ml_previsao }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </h1>
+
+                    <small class="text-muted">
+                        dias
+                    </small>
+
+                </div>
+
+            </div>
+
+            <!-- FINAL -->
+            <div class="col-lg-4">
+
+                <div class="card border-0 bg-success text-white h-100 p-4 shadow">
+
+                    <div class="mb-2 fs-1">
+                        📊
+                    </div>
+
+                    <h6>
+                        Estimativa Final
+                    </h6>
+
+                    <h1 class="display-5 fw-bold">
+
+                        {% if estimativa_final is not none %}
+
+                            {{ estimativa_final }}
+
+                        {% elif ml_previsao %}
+
+                            {{ ml_previsao }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </h1>
+
+                    <small>
+                        dias estimados
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ALERTA ML -->
+        {% if aviso_ml == "baixa_confianca" %}
+
+        <div
+            class="
+            alert
+            alert-warning
+            shadow-sm
+            mb-4
+            border-0
+            "
+        >
+
+            <strong
+                style="
+                color:#212529
+                !important
+                "
+            >
+                ⚠ Baixa confiança do modelo ML
+            </strong>
+
+            <br>
+
+            <span class="text-dark">
+
+                Poucos casos graves foram encontrados
+                no dataset.
+
+                A previsão final priorizou
+                casos reais semelhantes (CBR).
+
+            </span>
+
+        </div>
+
+        {% endif %}
+
+        <!-- BARRA DE RISCO -->
+        <div class="mb-4">
+
+            <div class="d-flex justify-content-between mb-2">
+
+                <strong>
+                    ⚠️ Risco Médico
+                </strong>
+
+                <strong class="text-{{ risco_cor }}">
+
+                    {{ risco|upper }}
+
+                </strong>
+
+            </div>
+
+            <div
+                class="progress"
+                style="height: 22px;"
+            >
+
+                <div
+                    class="progress-bar
+                    bg-{{ risco_cor }}"
+
+                    style="
+                    width:
+                    {{ risco_percentual }}%;
+                    "
+                >
+
+                    {{ risco_percentual }}%
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MOTIVOS -->
+        {% if explicacao_ml %}
+
+        <div class="mt-4">
+
+            <h4 class="mb-3">
+
+                🧠 O que a IA considerou
+
+            </h4>
+
+            <div class="row">
+
+                {% for fator in explicacao_ml %}
+
+                <div class="col-lg-6 mb-3">
+
+                    <div
+                        class="card
+                        border-0
+                        p-3
+                        h-100
+                        medical-card"
+                    >
+
+                        <h5 class="mb-2">
+
+                            {{ fator.icone }}
+
+                            {{ fator.titulo }}
+
+                        </h5>
+
+                        <p class="mb-0 text-muted">
+
+                            {{ fator.descricao }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+<!-- CONTEÚDO -->
+<div class="row">
+
+    <!-- INFO -->
+    <div class="col-lg-4 mb-4">
+
+        <div class="card p-4 shadow-lg h-100">
+
+            <h4 class="mb-4">
+                📋 Informações
+            </h4>
+
+            <p><strong>Idade:</strong> {{ jogador.idade }}</p>
+            <p><strong>Altura:</strong> {{ jogador.altura }} m</p>
+            <p><strong>Peso:</strong> {{ jogador.peso }} kg</p>
+            <p><strong>Temporada:</strong> {{ jogador.temporada }}</p>
+            <p><strong>Jogos:</strong> {{ jogador.jogos_temporada }}</p>
+
+        </div>
+
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="col-lg-8">
+
+        <div class="card p-4 shadow-lg">
+
+            <h3 class="mb-4">
+                🏥 Histórico de Lesões
+            </h3>
+
+            {% if lesoes %}
+
+            {% for lesao in lesoes %}
+
+            <div class="injury-card mb-4">
+
+                <div class="d-flex justify-content-between">
+
+                    <h5>
+                        {{ lesao.tipo_lesao }}
+                    </h5>
+
+                    <span class="badge bg-secondary">
+                        {{ lesao.data_lesao }}
+                    </span>
+
+                </div>
+
+                <hr>
+
+                <p>
+                    <strong>Local:</strong>
+                    {{ lesao.local_lesao }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {{ lesao.status }}
+                </p>
+
+                <p>
+                    <strong>Jogos Perdidos:</strong>
+                    {% if lesao.jogos_lesionado > 0 %}
+
+                        {{ lesao.jogos_lesionado }}
+
+                    {% else %}
+
+                        Em andamento
+
+                    {% endif %}
+                </p>
+
+                <p>
+                    <strong>Retorno:</strong>
+                    {% if lesao.retorno_previsto %}
+
+                        {{ lesao.retorno_previsto }}
+
+                    {% else %}
+
+                        Indefinido
+
+                    {% endif %}
+                </p>
+
+                <p>
+                    <strong>Observações:</strong>
+                    {{ lesao.observacoes }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <div class="text-center py-5">
+
+                <h5 class="text-secondary">
+                    Nenhuma lesão registrada
+                </h5>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+{% endblock %}
