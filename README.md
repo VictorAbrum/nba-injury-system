@@ -1,4 +1,4 @@
-# 🏀 NBA Medical Intelligence System
+# NBA Medical Intelligence System
 
 Plataforma inteligente para monitoramento, análise e predição de lesões na NBA utilizando **Machine Learning**, **Case-Based Reasoning (CBR)** e análise médica aplicada.
 
@@ -6,7 +6,7 @@ Este projeto foi desenvolvido como um **projeto acadêmico** com foco em intelig
 
 ---
 
-## 📌 Objetivo do Projeto
+## Objetivo do Projeto
 
 O objetivo do sistema é centralizar informações sobre lesões de jogadores da NBA e fornecer recursos de:
 
@@ -21,22 +21,22 @@ O sistema busca explorar como técnicas de **IA aplicada** podem auxiliar no ent
 
 ---
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
-### 📊 Dashboard Inteligente
+### Dashboard Inteligente
 - KPIs médicos
 - Estatísticas de lesões
 - Jogadores mais lesionados
 - Times mais afetados
 - Insights automáticos
 
-### 🏀 Gestão de Jogadores
+### Gestão de Jogadores
 - Cadastro de jogadores
 - Informações físicas
 - Histórico esportivo
 - Busca e filtros
 
-### 🏥 Gestão de Lesões
+### Gestão de Lesões
 - Cadastro de lesões
 - Histórico detalhado
 - Status médicos
@@ -45,7 +45,7 @@ O sistema busca explorar como técnicas de **IA aplicada** podem auxiliar no ent
 - Cirurgia realizada
 - Observações clínicas
 
-### 🧠 Inteligência Artificial
+### Inteligência Artificial
 #### Machine Learning
 - Predição de tempo de recuperação
 - Classificação de gravidade
@@ -56,14 +56,14 @@ O sistema busca explorar como técnicas de **IA aplicada** podem auxiliar no ent
 - Comparação entre históricos
 - Apoio à decisão médica
 
-### 📂 Upload de Dados
+### Upload de Dados
 - Importação CSV
 - Atualização de base médica
 - Integração de datasets
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 - Python
@@ -86,7 +86,7 @@ O sistema busca explorar como técnicas de **IA aplicada** podem auxiliar no ent
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```plaintext
 nba-medical-intelligence-system/
@@ -159,7 +159,7 @@ Features utilizadas incluem:
 
 ## 🔬 Status do Projeto
 
-🚧 Em desenvolvimento contínuo
+Em desenvolvimento contínuo
 
 Melhorias futuras:
 
@@ -172,7 +172,7 @@ Melhorias futuras:
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
 **Victor Abrum**  
 Estudante de Sistemas de Informação
